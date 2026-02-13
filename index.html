@@ -1,136 +1,252 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Valentine's Day 💖</title>
-<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Valentine's Day 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
 
-<style>
-body {
-    margin: 0; padding: 0;
-    font-family: 'Prompt', sans-serif;
-    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('valentine.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
-    overflow: hidden;
-}
+    <style>
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Prompt', sans-serif;
+            background: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)), url('valentine.jpg') #fff5f7;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            overflow: hidden;
+        }
 
-.card {
-    background: rgba(255, 105, 135, 0.85);
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    animation: fadeIn 2s ease-in-out;
-}
+        /* --- หน้าซองจดหมาย --- */
+        #envelopeContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.5s;
+        }
 
-h1 { font-size: 35px; color: white; }
-p { font-size: 18px; color: white; line-height: 1.6; }
+        .envelope {
+            font-size: 100px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+            transition: 0.3s;
+        }
 
-button {
-    padding: 12px 25px;
-    font-size: 18px;
-    border: none;
-    border-radius: 30px;
-    background: #ff2e63;
-    color: white;
-    cursor: pointer;
-    transition: 0.3s;
-    margin: 5px;
-    font-family: 'Prompt', sans-serif;
-}
+        .envelope:hover { transform: scale(1.1); }
 
-button:hover { transform: scale(1.1); background: #ff004c; }
+        /* --- กล่องข้อความหลัก --- */
+        .card {
+            display: none; 
+            background: #ffffff; 
+            padding: 35px;
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(255, 182, 193, 0.4);
+            animation: fadeIn 1s ease-out;
+            max-width: 80%;
+            border: 2px solid #ffe4e8;
+        }
 
-.letter {
-    position: fixed;
-    bottom: -100%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 85%;
-    max-width: 450px;
-    background: #FFC0CB; 
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    transition: 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    text-align: left;
-    color: #444;
-    z-index: 100;
-}
+        h1 { font-size: 28px; color: #ff8fa3; margin-bottom: 15px; }
+        p { font-size: 17px; color: #777; line-height: 1.6; }
 
-.show-letter { bottom: 50%; transform: translate(-50%, 50%); }
+        button {
+            padding: 10px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 25px;
+            background: #ffb6c1;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            margin: 8px;
+            font-family: 'Prompt', sans-serif;
+        }
 
-.flower {
-    position: absolute;
-    bottom: -10vh;
-    font-size: 30px;
-    animation: float 10s linear infinite;
-}
+        button:hover { background: #ff8fa3; }
 
-@keyframes float {
-    0% { transform: translateY(0); opacity: 0; }
-    10% { opacity: 1; }
-    100% { transform: translateY(-110vh); opacity: 0; }
-}
+        .letter {
+            position: fixed;
+            bottom: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 500px; /* ปรับให้กว้างขึ้นเพื่อรับกับแมวตัวใหญ่ */
+            background: #ffffff; 
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+            text-align: center;
+            z-index: 100;
+            border: 1px solid #ffe4e8;
+        }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-</style>
+        .show-letter { bottom: 50% !important; transform: translate(-50%, 50%) !important; }
+
+        .letter-content {
+            max-height: 220px; 
+            overflow-y: auto; 
+            text-align: left; 
+            padding: 15px; 
+            background: #fff9fa; 
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+
+        .flower {
+            position: absolute;
+            bottom: -10vh;
+            font-size: 24px;
+            animation: float 10s linear infinite;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        /* ตกแต่งแมว */
+        .cat-gif {
+            width: 220px; /* ขยายขนาดแมวตามคำขอ */
+            height: auto;
+            margin: 15px 0;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(255, 182, 193, 0.3);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.6; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="flower" style="left:10%">🌸</div>
-<div class="flower" style="left:30%; animation-delay:2s;">🌷</div>
-<div class="flower" style="left:50%; animation-delay:4s;">🌹</div>
-<div class="flower" style="left:70%; animation-delay:1s;">🌺</div>
-<div class="flower" style="left:90%; animation-delay:3s;">💮</div>
-
-<div class="card" id="mainCard">
-    <h1>Happy Valentine's Day 💕</h1>
-    <p>
-        ถึงคนพิเศษของแม็ก 💖<br>
-        ขอบคุณที่เข้ามาในชีวิตผมนะคับ<br>
-        แม็กรักพี่หลินมากนะ 💌
-    </p>
-    <button onclick="showLetter()">อ่านจดหมาย 💝</button>
-</div>
-
-<div class="letter" id="letter1">
-    <h2 style="text-align:center; color:#ff2e63;">💌 จดหมายจากใจ 💌</h2>
-    <p>
-        ขอบคุณที่เข้ามาเป็นส่วนหนึ่งของชีวิต ทำให้วันธรรมดาดูมีความหมายมากขึ้น  
-        แค่ได้คุยหรืออยู่ใกล้กันก็ทำให้ผมรู้สึกดีและยิ้มได้ทุกวัน<br><br>
-
-        ผมอาจจะไม่ใช่คนที่ดีที่สุด แต่ผมก็รักพี่มาก ๆ ไม่แพ้ใครนะคับ  
-        อยากอยู่ข้าง ๆ เป็นกำลังใจให้พี่ในวันที่เหนื่อย และแบ่งปันเรื่องดี ๆ กับพี่ในทุกวัน 💖<br><br>
-
-        บางครั้งผมอาจจะเงียบไปบ้าง หรือไม่รู้ว่าจะพูดอะไรดี  
-        แต่ความรู้สึกดี ๆ ที่มีต่อพี่มันอยู่ตรงนี้เสมอ  
-        อยากให้พี่รู้ว่าผมพร้อมฟัง และพร้อมอยู่ด้วยในทุกสถานการณ์<br><br>
-
-        ผมไม่ได้คาดหวังอะไร แค่อยากให้พี่สบายใจและมีรอยยิ้มทุกวัน  
-        แค่ได้เห็นพี่มีความสุข ก็เป็นความสุขของผมด้วยเหมือนกัน  
-        หวังว่าทุกวันที่เราได้อยู่ด้วยกัน จะเป็นวันที่น่าจดจำและอบอุ่นสำหรับทั้งเรา 🌸
-    </p>
-    <div style="text-align:center;">
-        <button onclick="document.getElementById('letter1').classList.remove('show-letter')">ปิดจดหมาย ⬅️</button>
+    <div id="flowerZone">
+        <div class="flower" style="left:10%">🌸</div>
+        <div class="flower" style="left:35%; animation-delay:2s;">🌷</div>
+        <div class="flower" style="left:65%; animation-delay:4s;">🌸</div>
+        <div class="flower" style="left:85%; animation-delay:1s;">✨</div>
     </div>
-</div>
-<script>
-function showLetter() {
-    document.getElementById("letter1").classList.add("show-letter");
-}
-</script>
 
+    <div id="envelopeContainer" onclick="openEnvelope()">
+        <div class="envelope">✉️</div>
+        <p style="color: #0c0c0c; font-weight: 600;">พี่หลินมีจดหมาย 1 ฉบับ กดเปิดดูสิคะ 💌</p>
+    </div>
+
+    <div class="card" id="mainCard">
+        <h1>Happy Valentine's Day 💕</h1>
+        <p>
+            ถึงคนพิเศษของแม็ก 💖<br>
+            ขอบคุณที่เข้ามาในชีวิตผมนะคับ<br>
+            แม็กรักพี่หลินมากนะ 💌
+        </p>
+        <button onclick="showLetter(1)">อ่านจดหมาย 💝</button>
+    </div>
+
+    <div class="letter" id="letter1">
+        <h2 style="color:#ff8fa3; margin-top:0; font-size: 22px;">💌 ถึงพี่หลิน 💌</h2>
+        <div class="letter-content">
+            <p>
+                ขอบคุณที่เข้ามาเป็นส่วนหนึ่งของชีวิต ทำให้วันธรรมดาของผมดูมีความหมายมากขึ้นในทุกๆ วันที่ผ่านไป...<br><br>
+                แค่ได้คุย หรือได้อยู่ใกล้ๆ กัน ก็ทำให้ผมรู้สึกดีและยิ้มได้เสมอ ขอบคุณที่คอยรับฟังและเข้าใจในตัวผมนะคับ แม้บางครั้งผมอาจจะสื่อสารไม่เก่ง หรือดูเงียบไปบ้าง แต่ความรู้สึกดีๆ ที่มีให้พี่มันไม่เคยน้อยลงเลย<br><br>
+                ผมรักพี่มากนะคับ และอยากรักษาความรู้สึกดีๆ แบบนี้เอาไว้ให้นานที่สุดเท่าที่จะทำได้ ขอบคุณที่ให้โอกาสผมนะคับ 💖
+            </p>
+        </div>
+        <button onclick="showLetter(2)">หน้าถัดไป ➡️</button>
+    </div>
+
+    <div class="letter" id="letter2">
+        <h2 style="color:#ff8fa3; margin-top:0; font-size: 22px;">🐱 รับดอกไม้ไหมคะ? 🐱</h2>
+        <img class="cat-gif" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcGltdzBmdGkwNHBkbXRwNzdldzNvMmplajNqNTdxa2t3NTUxZW9waSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ycEx6eexqz4p7ZVrde/giphy.gif" 
+             alt="Cat with flower">
+        
+        <div id="choiceButtons">
+            <button id="yesBtn" onclick="handleChoice('รับ')">รับ 💝</button>
+            <button id="noBtn" onclick="handleChoice('ไม่รับ')">ไม่รับ 😋</button>
+        </div>
+
+        <div id="resultSection" style="display:none; margin-top:10px;">
+            <h2 id="resultTitle" style="color:#ff8fa3; margin: 5px 0;"></h2>
+            <p id="resultText" style="font-weight: 600; font-size: 18px; color: #555;"></p>
+            <button onclick="closeLetter()" style="background: #eee; color: #888;">ปิดจดหมาย ⬅️</button>
+        </div>
+    </div>
+
+    <script>
+        let noCount = 0;
+        let yesScale = 1;
+
+        function openEnvelope() {
+            document.getElementById("envelopeContainer").style.opacity = "0";
+            setTimeout(() => {
+                document.getElementById("envelopeContainer").style.display = "none";
+                document.getElementById("mainCard").style.display = "block";
+            }, 500);
+        }
+
+        function showLetter(num) {
+            document.getElementById("letter1").classList.remove("show-letter");
+            document.getElementById("letter2").classList.remove("show-letter");
+            document.getElementById("mainCard").style.display = "none";
+            
+            if(num === 1) document.getElementById("letter1").classList.add("show-letter");
+            if(num === 2) document.getElementById("letter2").classList.add("show-letter");
+        }
+
+        function handleChoice(val) {
+            const yesBtn = document.getElementById("yesBtn");
+            const noBtn = document.getElementById("noBtn");
+            const title = document.getElementById("resultTitle");
+            const text = document.getElementById("resultText");
+
+            if (val === 'ไม่รับ') {
+                noCount++;
+                // ปุ่มยอมรับใหญ่ขึ้นทีละนิด
+                yesScale += 0.3; // ปรับให้ใหญ่ขึ้นชัดเจนขึ้น
+                yesBtn.style.transform = `scale(${yesScale})`;
+                
+                // ถ้ากดครบ 5 ครั้ง ปุ่มไม่รับหายไป
+                if (noCount >= 5) {
+                    noBtn.style.display = "none";
+                }
+                return;
+            }
+
+            if(val === 'รับ') {
+                // ดอกไม้หายไปตามสั่ง
+                document.getElementById("flowerZone").style.display = "none";
+                
+                document.getElementById("choiceButtons").style.display = "none";
+                document.getElementById("resultSection").style.display = "block";
+                title.innerText = "เย้! ❤️";
+                text.innerText = "ขอบคุณที่รับดอกไม้นะคับ 💖";
+            }
+        }
+
+        function closeLetter() {
+            document.getElementById("letter1").classList.remove("show-letter");
+            document.getElementById("letter2").classList.remove("show-letter");
+            document.getElementById("mainCard").style.display = "block";
+            
+            // รีเซ็ตค่าปุ่มตอนปิด
+            noCount = 0;
+            yesScale = 1;
+            document.getElementById("yesBtn").style.transform = `scale(1)`;
+            document.getElementById("noBtn").style.display = "inline-block";
+            document.getElementById("resultSection").style.display = "none";
+            document.getElementById("choiceButtons").style.display = "block";
+            document.getElementById("flowerZone").style.display = "block";
+        }
+    </script>
 </body>
 </html>
