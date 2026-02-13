@@ -114,6 +114,7 @@
             border: 1px dashed #ffb6c1;
         }
 
+        /* ของโปรยพื้นหลัง */
         .item {
             position: absolute;
             bottom: -10vh;
@@ -132,7 +133,7 @@
             z-index: 2;
         }
 
-        /* ส่วนรับข้อความ */
+        /* --- ส่วนรับข้อความใหม่ --- */
         #msgInput {
             width: 85%;
             padding: 12px;
@@ -142,9 +143,15 @@
             font-family: 'Prompt', sans-serif;
             outline: none;
             font-size: 16px;
+            transition: 0.3s;
         }
 
-        .loading {
+        #msgInput:focus {
+            border-color: #ff8fa3;
+            box-shadow: 0 0 10px rgba(255, 143, 163, 0.2);
+        }
+
+        .loading-text {
             font-size: 14px;
             color: #ff8fa3;
             display: none;
@@ -218,17 +225,16 @@
         </div>
 
         <div id="resultSection" style="display:none; margin-top:10px;">
-            <h2 id="resultTitle" style="color:#ff8fa3; margin: 5px 0;">เย้! ❤️ ขอบคุณนะคับ</h2>
-            <p style="font-weight: 600; font-size: 16px; color: #555;">ฝากข้อความถึงแม็กหน่อยนะ:</p>
-            <input type="text" id="msgInput" placeholder="พิมพ์บอกอะไรแม็กหน่อย...">
+            <h2 style="color:#ff8fa3; margin: 5px 0;">เย้! ❤️ ขอบคุณนะคับ</h2>
+            <p style="font-weight: 600; font-size: 16px; color: #555;">มีอะไรอยากบอกแม็กไหมคะ?</p>
+            <input type="text" id="msgInput" placeholder="พิมพ์บอกแม็กตรงนี้เลย...">
             <br>
-            <button id="sendBtn" onclick="sendMessage()">ส่งข้อความ 💌</button>
-            <p class="loading" id="loadText">กำลังส่งความรักไปหาแม็ก...</p>
+            <button id="sendBtn" onclick="sendMessage()">ส่งข้อความหาแม็ก 💌</button>
+            <p class="loading-text" id="loadText">กำลังส่งความรักไปหาแม็ก...</p>
         </div>
     </div>
 
     <script>
-        // ลิงก์ Google Apps Script ของคุณ
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxoKWwQ5ApDp_NuzcwQ2TVnRsXChI_Ik1pTbeMGDVqoukpJFS0GC3djonS1dV6os2Zx/exec"; 
 
         let noCount = 0;
@@ -272,26 +278,23 @@
             const btn = document.getElementById("sendBtn");
             const loadText = document.getElementById("loadText");
 
-            if(!msg) { alert("พิมพ์บอกแม็กสักนิดน้าา 😊"); return; }
+            if(!msg) { alert("พิมพ์บอกอะไรแม็กสักนิดน้าาา 😊"); return; }
 
             btn.disabled = true;
             loadText.style.display = "block";
 
-            // สร้างฟอร์มข้อมูลส่งไป Google Sheets
-            const formData = new FormData();
-            formData.append("message", msg);
-
+            // ส่งข้อมูลแบบ POST
             fetch(SCRIPT_URL, {
                 method: 'POST',
-                body: formData
-            })
-            .then(res => {
-                loadText.innerText = "ส่งเรียบร้อยแล้ว! รักพี่หลินนะคับ 💖";
+                mode: 'no-cors', // สำคัญสำหรับ Google Script
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `message=${encodeURIComponent(msg)}`
+            }).then(() => {
+                loadText.innerText = "แม็กได้รับความรักแล้ว! ขอบคุณนะคับ 💖";
                 document.getElementById("msgInput").value = "";
                 setTimeout(() => { closeLetter(); }, 2500);
-            })
-            .catch(err => {
-                // กรณี no-cors อาจจะเด้งมาที่นี่แต่ข้อมูลเข้าปกติ
+            }).catch(err => {
+                // แม้จะ Error จาก CORS แต่ข้อมูลมักจะเข้า Sheets แล้ว
                 loadText.innerText = "ส่งเรียบร้อยแล้ว! รักพี่หลินนะคับ 💖";
                 setTimeout(() => { closeLetter(); }, 2500);
             });
@@ -301,6 +304,7 @@
             document.getElementById("letter1").classList.remove("show-letter");
             document.getElementById("letter2").classList.remove("show-letter");
             document.getElementById("mainCard").style.display = "block";
+            // รีเซ็ตค่าหน้าจอ
             document.getElementById("resultSection").style.display = "none";
             document.getElementById("choiceButtons").style.display = "block";
             document.getElementById("loadText").style.display = "none";
