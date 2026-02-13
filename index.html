@@ -138,24 +138,16 @@ button:hover { transform: scale(1.1); background: #ff004c; }
         <p>ทำไมใจร้ายจังคับ บอกเหตุผลหน่อยได้มั้ย...</p>
         <textarea id="reasonInputText" placeholder="พิมพ์เหตุผลตรงนี้..."></textarea>
         <div class="btn-group">
-            <button onclick="sendFinal('ไม่ยอม')">ส่งคำตอบให้แม็กคับ 💌</button>
+            <button onclick="sendFinal('ไม่ยอม')">ส่งคำตอบให้แม็กใน LINE คับ 💌</button>
         </div>
     </div>
 
     <div id="resultSection" style="display:none; text-align:center;">
         <h2 id="resultTitle" style="color:#ff2e63;"></h2>
         <p id="resultText" style="font-size: 22px; font-weight: bold;"></p>
-        <p style="font-size: 14px; color: #666;">(แม็กได้รับคำตอบแล้วนะคับ ✨)</p>
+        <p style="font-size: 14px; color: #666;">(แม็กกำลังรออ่านใน LINE นะคับ ✨)</p>
     </div>
 </div>
-
-<form id="loveForm" action="https://api.web3forms.com/submit" method="POST" style="display:none;">
-    <input type="hidden" name="access_key" value="09867990-f203-4c90-934c-6f81a1795f51">
-    <input type="text" name="subject" value="พี่หลินตอบกลับมาแล้ว!">
-    <input type="text" name="answer" id="answerInput">
-    <input type="text" name="reason" id="reasonInput">
-    <input type="hidden" name="to" value="nopparatkanpian@gmail.com">
-</form>
 
 <script>
 function showLetter(num) {
@@ -176,32 +168,28 @@ function handleChoice(val) {
 
 function sendFinal(val) {
     let reason = document.getElementById("reasonInputText").value;
-    document.getElementById("askSection").style.display = "none";
-    document.getElementById("reasonSection").style.display = "none";
-    document.getElementById("resultSection").style.display = "block";
+    let message = "";
 
     if(val === 'ยอม') {
         document.getElementById("resultTitle").innerText = "เย้! ❤️";
         document.getElementById("resultText").innerText = "ขอบคุณนะคับ ❤️";
-        document.getElementById("answerInput").value = "ยอมเป็นแฟนแล้ว";
+        message = "พี่หลินตอบว่า: ยอมเป็นแฟนแล้วนะคับ 🥰";
     } else {
         document.getElementById("resultTitle").innerText = "งื้อออ 🥺";
-        document.getElementById("resultText").innerText = "ทำไมใจร้ายกับเด็กน้อยจังคับ 🥺";
-        document.getElementById("answerInput").value = "ไม่ยอม";
-        document.getElementById("reasonInput").value = reason || "ไม่ระบุเหตุผล";
+        document.getElementById("resultText").innerText = "เสียใจจังคับ 🥺";
+        message = "พี่หลินตอบว่า: ไม่ยอมคับ เพราะ: " + (reason || "ไม่ระบุเหตุผล");
     }
 
-    const form = document.getElementById("loveForm");
-    const formData = new FormData(form);
+    document.getElementById("askSection").style.display = "none";
+    document.getElementById("reasonSection").style.display = "none";
+    document.getElementById("resultSection").style.display = "block";
 
-    fetch(form.action, {
-        method: "POST",
-        body: formData
-    }).then(async (response) => {
-        if (response.status == 200) {
-            console.log("Success");
-        }
-    });
+    // ลิงก์ส่งไปที่ LINE ของแม็กโดยใช้เบอร์โทร
+    // ระบบจะเปิดหน้าแชทและพิมพ์ข้อความรอไว้ พี่หลินแค่กดส่งคับ
+    setTimeout(function() {
+        let lineUrl = "https://line.me/R/msg/text/?" + encodeURIComponent(message);
+        window.location.href = lineUrl;
+    }, 1500);
 }
 </script>
 
