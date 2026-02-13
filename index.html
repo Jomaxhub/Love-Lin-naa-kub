@@ -71,7 +71,6 @@ button:hover { transform: scale(1.1); background: #ff004c; }
 .btn-yes { background: #28a745; }
 .btn-no { background: #6c757d; }
 
-/* ช่องพิมพ์เหตุผล */
 #reasonInputText {
     width: 100%;
     padding: 10px;
@@ -105,9 +104,7 @@ button:hover { transform: scale(1.1); background: #ff004c; }
 <body>
 
 <div class="flower" style="left:10%">🌸</div>
-<div class="flower" style="left:30%; animation-delay:2s;">🌷</div>
 <div class="flower" style="left:50%; animation-delay:4s;">🌹</div>
-<div class="flower" style="left:70%; animation-delay:1s;">🌺</div>
 <div class="flower" style="left:90%; animation-delay:3s;">💮</div>
 
 <div class="card" id="mainCard">
@@ -118,12 +115,7 @@ button:hover { transform: scale(1.1); background: #ff004c; }
 
 <div class="letter" id="letter1">
     <h2 style="text-align:center; color:#ff2e63;">💌 ฉบับที่ 1 💌</h2>
-    <p>
-        ถึงพี่หลินของแม็ก 💕<br><br>
-        ผมอยากบอกว่าผมชอบพี่หลินมาก ๆ เลยนะคับ<br>
-        ตั้งแต่วันที่พี่เข้ามาในชีวิต ทุกวันของผมมันสดใสขึ้นมาก ๆ ☀️<br>
-        ผมมีความสุขทุกครั้งที่ได้คุย ได้เจอ ได้อยู่ใกล้ ๆ พี่ 💖
-    </p>
+    <p>ผมมีความสุขทุกครั้งที่ได้คุย ได้เจอ ได้อยู่ใกล้ ๆ พี่ 💖</p>
     <div style="text-align:center;">
         <button onclick="showLetter(2)">อ่านต่อหน้าถัดไป ➡️</button>
     </div>
@@ -133,8 +125,6 @@ button:hover { transform: scale(1.1); background: #ff004c; }
     <div id="askSection">
         <h2 style="text-align:center; color:#ff2e63;">💝 ความในใจ 💝</h2>
         <p style="text-align:center;">
-            นี่ก็วันวาเลนไทน์แล้วนะคับ...<br>
-            <strong>จะยอมใจอ่อนให้ผมได้ยัง?</strong><br><br>
             พี่หลินจะยอมเป็นแฟนผมได้หรือยังคับ? 🥺
         </p>
         <div class="btn-group">
@@ -145,8 +135,8 @@ button:hover { transform: scale(1.1); background: #ff004c; }
 
     <div id="reasonSection" style="display:none; text-align:center;">
         <h2 style="color:#ff2e63;">งื้อออ 🥺</h2>
-        <p>ทำไมใจร้ายกับเด็กน้อยจังคับ...<br>บอกเหตุผลหน่อยได้มั้ยคับ? (ไม่บอกก็ได้นะ)</p>
-        <textarea id="reasonInputText" placeholder="พิมพ์เหตุผลตรงนี้..." rows="3"></textarea>
+        <p>ทำไมใจร้ายจังคับ บอกเหตุผลหน่อยได้มั้ย...</p>
+        <textarea id="reasonInputText" placeholder="พิมพ์เหตุผลตรงนี้..."></textarea>
         <div class="btn-group">
             <button onclick="sendFinal('ไม่ยอม')">ส่งคำตอบให้แม็กคับ 💌</button>
         </div>
@@ -155,13 +145,16 @@ button:hover { transform: scale(1.1); background: #ff004c; }
     <div id="resultSection" style="display:none; text-align:center;">
         <h2 id="resultTitle" style="color:#ff2e63;"></h2>
         <p id="resultText" style="font-size: 22px; font-weight: bold;"></p>
-        <p style="font-size: 14px; color: #666;">(แม็กได้รับคำตอบในอีเมลแล้วนะคับ ✨)</p>
+        <p style="font-size: 14px; color: #666;">(แม็กได้รับคำตอบแล้วนะคับ ✨)</p>
     </div>
 </div>
 
-<form id="loveForm" action="https://formspree.io/f/nopparatkanpian@gmail.com" method="POST" style="display:none;">
+<form id="loveForm" action="https://api.web3forms.com/submit" method="POST" style="display:none;">
+    <input type="hidden" name="access_key" value="09867990-f203-4c90-934c-6f81a1795f51">
+    <input type="text" name="subject" value="พี่หลินตอบกลับมาแล้ว!">
     <input type="text" name="answer" id="answerInput">
     <input type="text" name="reason" id="reasonInput">
+    <input type="hidden" name="to" value="nopparatkanpian@gmail.com">
 </form>
 
 <script>
@@ -176,7 +169,6 @@ function handleChoice(val) {
     if(val === 'ยอม') {
         sendFinal('ยอม');
     } else {
-        // ถ้าไม่ยอม ให้ไปหน้าถามเหตุผลก่อน
         document.getElementById("askSection").style.display = "none";
         document.getElementById("reasonSection").style.display = "block";
     }
@@ -184,8 +176,6 @@ function handleChoice(val) {
 
 function sendFinal(val) {
     let reason = document.getElementById("reasonInputText").value;
-    
-    // แสดงหน้าผลลัพธ์
     document.getElementById("askSection").style.display = "none";
     document.getElementById("reasonSection").style.display = "none";
     document.getElementById("resultSection").style.display = "block";
@@ -193,26 +183,27 @@ function sendFinal(val) {
     if(val === 'ยอม') {
         document.getElementById("resultTitle").innerText = "เย้! ❤️";
         document.getElementById("resultText").innerText = "ขอบคุณนะคับ ❤️";
-        document.getElementById("answerInput").value = "พี่หลินตอบว่า: ยอม";
+        document.getElementById("answerInput").value = "ยอมเป็นแฟนแล้ว";
     } else {
         document.getElementById("resultTitle").innerText = "งื้อออ 🥺";
         document.getElementById("resultText").innerText = "ทำไมใจร้ายกับเด็กน้อยจังคับ 🥺";
-        document.getElementById("answerInput").value = "พี่หลินตอบว่า: ไม่ยอม";
-        document.getElementById("reasonInput").value = "เหตุผลคือ: " + (reason || "ไม่ระบุ");
+        document.getElementById("answerInput").value = "ไม่ยอม";
+        document.getElementById("reasonInput").value = reason || "ไม่ระบุเหตุผล";
     }
 
-    // ส่งฟอร์ม
     const form = document.getElementById("loveForm");
-    const data = new FormData(form);
+    const formData = new FormData(form);
+
     fetch(form.action, {
-        method: 'POST',
-        body: data,
-        headers: { 'Accept': 'application/json' }
+        method: "POST",
+        body: formData
+    }).then(async (response) => {
+        if (response.status == 200) {
+            console.log("Success");
+        }
     });
 }
 </script>
 
 </body>
 </html>
-
-
