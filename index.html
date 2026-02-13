@@ -29,30 +29,48 @@
             align-items: center;
             cursor: pointer;
             transition: 0.5s;
+            z-index: 10;
         }
 
         .envelope {
             font-size: 100px;
             filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
-            transition: 0.3s;
+            animation: bounce 2s infinite;
         }
 
-        .envelope:hover { transform: scale(1.1); }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
 
-        /* --- กล่องข้อความหลัก --- */
-        .card {
-            display: none; 
+        /* --- สไตล์กระดาษขาวและการตกแต่งภายใน --- */
+        .card, .letter {
             background: #ffffff; 
-            padding: 35px;
             border-radius: 25px;
             box-shadow: 0 10px 25px rgba(255, 182, 193, 0.4);
-            animation: fadeIn 1s ease-out;
-            max-width: 80%;
             border: 2px solid #ffe4e8;
+            position: relative; /* เพื่อให้ตกแต่งของในกระดาษได้ */
+            overflow: hidden;
         }
 
-        h1 { font-size: 28px; color: #ff8fa3; margin-bottom: 15px; }
-        p { font-size: 17px; color: #777; line-height: 1.6; }
+        .card {
+            display: none; 
+            padding: 45px 35px;
+            max-width: 80%;
+            animation: fadeIn 1s ease-out;
+            z-index: 10;
+        }
+
+        /* ของตกแต่งชิ้นเล็กๆ ในกระดาษ */
+        .deco-in-paper {
+            position: absolute;
+            font-size: 18px;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        h1 { font-size: 28px; color: #ff8fa3; margin-bottom: 15px; position: relative; z-index: 2; }
+        p { font-size: 17px; color: #555; line-height: 1.6; position: relative; z-index: 2; }
 
         button {
             padding: 10px 25px;
@@ -65,6 +83,8 @@
             transition: 0.2s;
             margin: 8px;
             font-family: 'Prompt', sans-serif;
+            position: relative;
+            z-index: 2;
         }
 
         button:hover { background: #ff8fa3; }
@@ -75,15 +95,11 @@
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
-            max-width: 500px; /* ปรับให้กว้างขึ้นเพื่อรับกับแมวตัวใหญ่ */
-            background: #ffffff; 
-            padding: 25px;
-            border-radius: 25px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            max-width: 500px;
+            padding: 30px;
             transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1);
             text-align: center;
             z-index: 100;
-            border: 1px solid #ffe4e8;
         }
 
         .show-letter { bottom: 50% !important; transform: translate(-50%, 50%) !important; }
@@ -93,32 +109,34 @@
             overflow-y: auto; 
             text-align: left; 
             padding: 15px; 
-            background: #fff9fa; 
+            background: rgba(255, 249, 250, 0.8); 
             border-radius: 15px;
             margin-bottom: 15px;
+            border: 1px dashed #ffb6c1;
         }
 
-        .flower {
+        /* ของโปรยพื้นหลังภายนอก */
+        .item {
             position: absolute;
             bottom: -10vh;
-            font-size: 24px;
-            animation: float 10s linear infinite;
-            z-index: -1;
-            opacity: 0.6;
+            font-size: 30px;
+            animation: float 8s linear infinite;
+            z-index: 1;
+            opacity: 0.7;
         }
 
-        /* ตกแต่งแมว */
         .cat-gif {
-            width: 220px; /* ขยายขนาดแมวตามคำขอ */
+            width: 200px;
             height: auto;
-            margin: 15px 0;
+            margin: 10px 0;
             border-radius: 20px;
-            box-shadow: 0 5px 15px rgba(255, 182, 193, 0.3);
+            position: relative;
+            z-index: 2;
         }
 
         @keyframes float {
             0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            20% { opacity: 0.6; }
+            10% { opacity: 0.7; }
             100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
         }
 
@@ -132,18 +150,26 @@
 <body>
 
     <div id="flowerZone">
-        <div class="flower" style="left:10%">🌸</div>
-        <div class="flower" style="left:35%; animation-delay:2s;">🌷</div>
-        <div class="flower" style="left:65%; animation-delay:4s;">🌸</div>
-        <div class="flower" style="left:85%; animation-delay:1s;">✨</div>
+        <div class="item" style="left:10%">🌹</div>
+        <div class="item" style="left:30%; animation-delay:2s;">🍫</div>
+        <div class="item" style="left:50%; animation-delay:4s;">💙</div>
+        <div class="item" style="left:70%; animation-delay:1s;">🤍</div>
+        <div class="item" style="left:90%; animation-delay:3s;">❤️</div>
     </div>
 
     <div id="envelopeContainer" onclick="openEnvelope()">
         <div class="envelope">✉️</div>
-        <p style="color: #0c0c0c; font-weight: 600;">พี่หลินมีจดหมาย 1 ฉบับ กดเปิดดูสิคะ 💌</p>
+        <p style="color: #0047AB; font-weight: 600; font-size: 18px;">
+            พี่หลินมีจดหมาย 1 ฉบับ กดเปิดดูสิคะ 💌
+        </p>
     </div>
 
     <div class="card" id="mainCard">
+        <div class="deco-in-paper" style="top:10px; left:10px;">🌹</div>
+        <div class="deco-in-paper" style="top:15px; right:15px;">💙</div>
+        <div class="deco-in-paper" style="bottom:15px; left:15px;">🍫</div>
+        <div class="deco-in-paper" style="bottom:10px; right:10px;">🤍</div>
+        
         <h1>Happy Valentine's Day 💕</h1>
         <p>
             ถึงคนพิเศษของแม็ก 💖<br>
@@ -154,6 +180,11 @@
     </div>
 
     <div class="letter" id="letter1">
+        <div class="deco-in-paper" style="top:5px; left:15px;">🌹</div>
+        <div class="deco-in-paper" style="top:5px; right:15px;">❤️</div>
+        <div class="deco-in-paper" style="bottom:10px; left:20px;">💙</div>
+        <div class="deco-in-paper" style="bottom:10px; right:20px;">🍫</div>
+
         <h2 style="color:#ff8fa3; margin-top:0; font-size: 22px;">💌 ถึงพี่หลิน 💌</h2>
         <div class="letter-content">
             <p>
@@ -166,9 +197,13 @@
     </div>
 
     <div class="letter" id="letter2">
+        <div class="deco-in-paper" style="top:10px; left:10px;">💙</div>
+        <div class="deco-in-paper" style="top:10px; right:10px;">❤️</div>
+        <div class="deco-in-paper" style="bottom:10px; left:10px;">🤍</div>
+        <div class="deco-in-paper" style="bottom:10px; right:10px;">🌹</div>
+
         <h2 style="color:#ff8fa3; margin-top:0; font-size: 22px;">🐱 รับดอกไม้ไหมคะ? 🐱</h2>
-        <img class="cat-gif" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcGltdzBmdGkwNHBkbXRwNzdldzNvMmplajNqNTdxa2t3NTUxZW9waSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ycEx6eexqz4p7ZVrde/giphy.gif" 
-             alt="Cat with flower">
+        <img class="cat-gif" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcGltdzBmdGkwNHBkbXRwNzdldzNvMmplajNqNTdxa2t3NTUxZW9waSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ycEx6eexqz4p7ZVrde/giphy.gif">
         
         <div id="choiceButtons">
             <button id="yesBtn" onclick="handleChoice('รับ')">รับ 💝</button>
@@ -211,11 +246,8 @@
 
             if (val === 'ไม่รับ') {
                 noCount++;
-                // ปุ่มยอมรับใหญ่ขึ้นทีละนิด
-                yesScale += 0.3; // ปรับให้ใหญ่ขึ้นชัดเจนขึ้น
+                yesScale += 0.3; 
                 yesBtn.style.transform = `scale(${yesScale})`;
-                
-                // ถ้ากดครบ 5 ครั้ง ปุ่มไม่รับหายไป
                 if (noCount >= 5) {
                     noBtn.style.display = "none";
                 }
@@ -223,9 +255,7 @@
             }
 
             if(val === 'รับ') {
-                // ดอกไม้หายไปตามสั่ง
                 document.getElementById("flowerZone").style.display = "none";
-                
                 document.getElementById("choiceButtons").style.display = "none";
                 document.getElementById("resultSection").style.display = "block";
                 title.innerText = "เย้! ❤️";
@@ -237,8 +267,6 @@
             document.getElementById("letter1").classList.remove("show-letter");
             document.getElementById("letter2").classList.remove("show-letter");
             document.getElementById("mainCard").style.display = "block";
-            
-            // รีเซ็ตค่าปุ่มตอนปิด
             noCount = 0;
             yesScale = 1;
             document.getElementById("yesBtn").style.transform = `scale(1)`;
