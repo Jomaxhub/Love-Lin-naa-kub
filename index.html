@@ -10,10 +10,9 @@
         body {
             margin: 0; padding: 0;
             font-family: 'Prompt', sans-serif;
-            background: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)), url('valentine.jpg') #fff5f7;
+            background: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)), #fff5f7;
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -22,19 +21,17 @@
             overflow: hidden;
         }
 
-        /* --- หน้าซองจดหมาย --- */
+        /* --- ซองจดหมาย --- */
         #envelopeContainer {
             display: flex;
             flex-direction: column;
             align-items: center;
             cursor: pointer;
-            transition: 0.5s;
             z-index: 10;
         }
 
         .envelope {
             font-size: 100px;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
             animation: bounce 2s infinite;
         }
 
@@ -43,7 +40,7 @@
             50% { transform: translateY(-20px); }
         }
 
-        /* --- สไตล์กระดาษขาวและการตกแต่งภายใน --- */
+        /* --- กระดาษขาว --- */
         .card, .letter {
             background: #ffffff; 
             border-radius: 25px;
@@ -53,23 +50,17 @@
             overflow: hidden;
         }
 
-        .card {
-            display: none; 
-            padding: 45px 35px;
-            max-width: 80%;
-            animation: fadeIn 1s ease-out;
-            z-index: 10;
-        }
+        .card { display: none; padding: 45px 35px; max-width: 80%; z-index: 10; }
 
         .deco-in-paper {
             position: absolute;
-            font-size: 18px;
+            font-size: 20px;
             opacity: 0.8;
             pointer-events: none;
         }
 
-        h1 { font-size: 28px; color: #ff8fa3; margin-bottom: 15px; position: relative; z-index: 2; }
-        p { font-size: 17px; color: #555; line-height: 1.6; position: relative; z-index: 2; }
+        h1 { font-size: 28px; color: #ff8fa3; margin-bottom: 15px; }
+        p { font-size: 17px; color: #555; line-height: 1.6; }
 
         button {
             padding: 10px 25px;
@@ -79,11 +70,8 @@
             background: #ffb6c1;
             color: white;
             cursor: pointer;
-            transition: 0.2s;
             margin: 8px;
             font-family: 'Prompt', sans-serif;
-            position: relative;
-            z-index: 2;
         }
 
         button:hover { background: #ff8fa3; }
@@ -97,21 +85,36 @@
             max-width: 500px;
             padding: 30px;
             transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1);
-            text-align: center;
             z-index: 100;
         }
 
         .show-letter { bottom: 50% !important; transform: translate(-50%, 50%) !important; }
 
-        .letter-content {
-            max-height: 220px; 
-            overflow-y: auto; 
-            text-align: left; 
-            padding: 15px; 
-            background: rgba(255, 249, 250, 0.8); 
+        /* --- ส่วนของ Input เขียนข้อความ --- */
+        .input-box-container {
+            margin-top: 15px;
+            background: #fff9fa;
+            padding: 15px;
             border-radius: 15px;
-            margin-bottom: 15px;
             border: 1px dashed #ffb6c1;
+        }
+
+        textarea {
+            width: 90%;
+            height: 80px;
+            border: 1px solid #ffb6c1;
+            border-radius: 10px;
+            padding: 10px;
+            font-family: 'Prompt', sans-serif;
+            resize: none;
+            outline: none;
+        }
+
+        .loading-text {
+            font-size: 14px;
+            color: #ff8fa3;
+            display: none;
+            font-weight: 600;
         }
 
         /* ของโปรยพื้นหลัง */
@@ -121,42 +124,6 @@
             font-size: 30px;
             animation: float 8s linear infinite;
             z-index: 1;
-            opacity: 0.7;
-        }
-
-        .cat-gif {
-            width: 200px;
-            height: auto;
-            margin: 10px 0;
-            border-radius: 20px;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* --- ส่วนรับข้อความใหม่ --- */
-        #msgInput {
-            width: 85%;
-            padding: 12px;
-            border: 2px solid #ffb6c1;
-            border-radius: 15px;
-            margin: 15px 0;
-            font-family: 'Prompt', sans-serif;
-            outline: none;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-
-        #msgInput:focus {
-            border-color: #ff8fa3;
-            box-shadow: 0 0 10px rgba(255, 143, 163, 0.2);
-        }
-
-        .loading-text {
-            font-size: 14px;
-            color: #ff8fa3;
-            display: none;
-            margin-top: 10px;
-            font-weight: 600;
         }
 
         @keyframes float {
@@ -165,10 +132,7 @@
             100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .cat-gif { width: 180px; border-radius: 15px; margin-bottom: 10px; }
     </style>
 </head>
 
@@ -184,133 +148,79 @@
 
     <div id="envelopeContainer" onclick="openEnvelope()">
         <div class="envelope">✉️</div>
-        <p style="color: #0047AB; font-weight: 600; font-size: 18px;">
-            พี่หลินมีจดหมาย 1 ฉบับ กดเปิดดูสิคะ 💌
-        </p>
+        <p style="color: #0047AB; font-weight: 600; font-size: 18px;">พี่หลินมีจดหมาย 1 ฉบับ กดเปิดดูสิคะ 💌</p>
     </div>
 
     <div class="card" id="mainCard">
         <div class="deco-in-paper" style="top:10px; left:10px;">🌹</div>
-        <div class="deco-in-paper" style="top:15px; right:15px;">💙</div>
-        <div class="deco-in-paper" style="bottom:15px; left:15px;">🍫</div>
-        <div class="deco-in-paper" style="bottom:10px; right:10px;">🤍</div>
+        <div class="deco-in-paper" style="top:10px; right:10px;">💙</div>
         <h1>Happy Valentine's Day 💕</h1>
-        <p>ถึงคนพิเศษของแม็ก 💖<br>ขอบคุณที่เข้ามาในชีวิตผมนะคับ<br>แม็กรักพี่หลินมากนะ 💌</p>
+        <p>ถึงคนพิเศษของแม็ก 💖<br>ขอบคุณที่เข้ามาในชีวิตผมนะคับ</p>
         <button onclick="showLetter(1)">อ่านจดหมาย 💝</button>
     </div>
 
     <div class="letter" id="letter1">
-        <div class="deco-in-paper" style="top:5px; left:15px;">🌹</div>
-        <div class="deco-in-paper" style="top:5px; right:15px;">❤️</div>
-        <div class="deco-in-paper" style="bottom:10px; left:20px;">💙</div>
-        <div class="deco-in-paper" style="bottom:10px; right:20px;">🍫</div>
-        <h2 style="color:#ff8fa3; margin-top:0; font-size: 22px;">💌 ถึงพี่หลิน 💌</h2>
-        <div class="letter-content">
-            <p>ขอบคุณที่เข้ามาเป็นส่วนหนึ่งของชีวิต ทำให้วันธรรมดาของผมดูมีความหมายมากขึ้น... ผมรักพี่มากนะคับ ขอบคุณที่ให้โอกาสผมนะคับ 💖</p>
-        </div>
-        <button onclick="showLetter(2)">หน้าถัดไป ➡️</button>
-    </div>
-
-    <div class="letter" id="letter2">
-        <div class="deco-in-paper" style="top:10px; left:10px;">💙</div>
+        <div class="deco-in-paper" style="top:10px; left:10px;">🍫</div>
         <div class="deco-in-paper" style="top:10px; right:10px;">❤️</div>
-        <div class="deco-in-paper" style="bottom:10px; left:10px;">🤍</div>
-        <div class="deco-in-paper" style="bottom:10px; right:10px;">🌹</div>
-        <h2 style="color:#ff8fa3; margin-top:0; font-size: 22px;">🐱 รับดอกไม้ไหมคะ? 🐱</h2>
+        
+        <h2 style="color:#ff8fa3; margin-top:0;">💌 บอกอะไรแม็กหน่อย...</h2>
         <img class="cat-gif" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcGltdzBmdGkwNHBkbXRwNzdldzNvMmplajNqNTdxa2t3NTUxZW9waSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ycEx6eexqz4p7ZVrde/giphy.gif">
         
-        <div id="choiceButtons">
-            <button id="yesBtn" onclick="handleChoice('รับ')">รับ 💝</button>
-            <button id="noBtn" onclick="handleChoice('ไม่รับ')">ไม่รับ 😋</button>
-        </div>
-
-        <div id="resultSection" style="display:none; margin-top:10px;">
-            <h2 style="color:#ff8fa3; margin: 5px 0;">เย้! ❤️ ขอบคุณนะคับ</h2>
-            <p style="font-weight: 600; font-size: 16px; color: #555;">มีอะไรอยากบอกแม็กไหมคะ?</p>
-            <input type="text" id="msgInput" placeholder="พิมพ์บอกแม็กตรงนี้เลย...">
+        <div class="input-box-container">
+            <textarea id="userMsg" placeholder="พิมพ์ข้อความตรงนี้แล้วกดส่งหาแม็กได้เลยนะ..."></textarea>
             <br>
-            <button id="sendBtn" onclick="sendMessage()">ส่งข้อความหาแม็ก 💌</button>
-            <p class="loading-text" id="loadText">กำลังส่งความรักไปหาแม็ก...</p>
+            <button id="sendBtn" onclick="sendToSheet()">ส่งความรักให้แม็ก 💌</button>
+            <p id="statusMsg" class="loading-text">กำลังส่งไปที่ Google Sheets ของแม็ก...</p>
         </div>
+        
+        <button onclick="closeLetter()" style="background:#ccc; font-size: 12px;">กลับหน้าแรก</button>
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxoKWwQ5ApDp_NuzcwQ2TVnRsXChI_Ik1pTbeMGDVqoukpJFS0GC3djonS1dV6os2Zx/exec"; 
-
-        let noCount = 0;
-        let yesScale = 1;
+        // ลิงก์ที่คุณให้มา
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxoKWwQ5ApDp_NuzcwQ2TVnRsXChI_Ik1pTbeMGDVqoukpJFS0GC3djonS1dV6os2Zx/exec";
 
         function openEnvelope() {
-            document.getElementById("envelopeContainer").style.opacity = "0";
-            setTimeout(() => {
-                document.getElementById("envelopeContainer").style.display = "none";
-                document.getElementById("mainCard").style.display = "block";
-            }, 500);
+            document.getElementById("envelopeContainer").style.display = "none";
+            document.getElementById("mainCard").style.display = "block";
         }
 
         function showLetter(num) {
-            document.getElementById("letter1").classList.remove("show-letter");
-            document.getElementById("letter2").classList.remove("show-letter");
             document.getElementById("mainCard").style.display = "none";
-            if(num === 1) document.getElementById("letter1").classList.add("show-letter");
-            if(num === 2) document.getElementById("letter2").classList.add("show-letter");
-        }
-
-        function handleChoice(val) {
-            const yesBtn = document.getElementById("yesBtn");
-            const noBtn = document.getElementById("noBtn");
-            if (val === 'ไม่รับ') {
-                noCount++;
-                yesScale += 0.3; 
-                yesBtn.style.transform = `scale(${yesScale})`;
-                if (noCount >= 5) noBtn.style.display = "none";
-                return;
-            }
-            if(val === 'รับ') {
-                document.getElementById("flowerZone").style.display = "none";
-                document.getElementById("choiceButtons").style.display = "none";
-                document.getElementById("resultSection").style.display = "block";
-            }
-        }
-
-        function sendMessage() {
-            const msg = document.getElementById("msgInput").value;
-            const btn = document.getElementById("sendBtn");
-            const loadText = document.getElementById("loadText");
-
-            if(!msg) { alert("พิมพ์บอกอะไรแม็กสักนิดน้าาา 😊"); return; }
-
-            btn.disabled = true;
-            loadText.style.display = "block";
-
-            // ส่งข้อมูลแบบ POST
-            fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors', // สำคัญสำหรับ Google Script
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `message=${encodeURIComponent(msg)}`
-            }).then(() => {
-                loadText.innerText = "แม็กได้รับความรักแล้ว! ขอบคุณนะคับ 💖";
-                document.getElementById("msgInput").value = "";
-                setTimeout(() => { closeLetter(); }, 2500);
-            }).catch(err => {
-                // แม้จะ Error จาก CORS แต่ข้อมูลมักจะเข้า Sheets แล้ว
-                loadText.innerText = "ส่งเรียบร้อยแล้ว! รักพี่หลินนะคับ 💖";
-                setTimeout(() => { closeLetter(); }, 2500);
-            });
+            document.getElementById("letter1").classList.add("show-letter");
         }
 
         function closeLetter() {
             document.getElementById("letter1").classList.remove("show-letter");
-            document.getElementById("letter2").classList.remove("show-letter");
             document.getElementById("mainCard").style.display = "block";
-            // รีเซ็ตค่าหน้าจอ
-            document.getElementById("resultSection").style.display = "none";
-            document.getElementById("choiceButtons").style.display = "block";
-            document.getElementById("loadText").style.display = "none";
-            document.getElementById("loadText").innerText = "กำลังส่งความรักไปหาแม็ก...";
-            document.getElementById("sendBtn").disabled = false;
-            document.getElementById("flowerZone").style.display = "block";
+        }
+
+        function sendToSheet() {
+            const msg = document.getElementById("userMsg").value;
+            const btn = document.getElementById("sendBtn");
+            const status = document.getElementById("statusMsg");
+
+            if(!msg) { alert("อย่าลืมเขียนข้อความก่อนส่งนะคับ 😊"); return; }
+
+            btn.disabled = true;
+            status.style.display = "block";
+
+            // ส่งข้อมูลไป Google Sheets
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors', 
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `message=${encodeURIComponent(msg)}`
+            }).then(() => {
+                status.innerText = "ส่งเรียบร้อยแล้ว! ข้อมูลจะไปขึ้นที่ Google ของแม็กนะ 💖";
+                document.getElementById("userMsg").value = "";
+                setTimeout(() => {
+                    status.style.display = "none";
+                    btn.disabled = false;
+                }, 3000);
+            }).catch(err => {
+                status.innerText = "ส่งสำเร็จแล้วครับ! 💖";
+            });
         }
     </script>
 </body>
