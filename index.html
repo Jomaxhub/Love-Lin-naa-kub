@@ -4,20 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Valentine's Day 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 body {
-    margin: 0;
-    padding: 0;
+    margin: 0; padding: 0;
     font-family: 'Prompt', sans-serif;
-
-    /* พื้นหลังใหม่จากรูปที่ส่ง */
-    background: 
-    linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-    url('valentine.jpg');
-
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('valentine.jpg.jpg');
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -34,15 +30,8 @@ body {
     animation: fadeIn 2s ease-in-out;
 }
 
-h1 {
-    font-size: 40px;
-    color: white;
-}
-
-p {
-    font-size: 20px;
-    color: white;
-}
+h1 { font-size: 35px; color: white; }
+p { font-size: 18px; color: white; line-height: 1.6; }
 
 button {
     padding: 12px 25px;
@@ -53,49 +42,57 @@ button {
     color: white;
     cursor: pointer;
     transition: 0.3s;
+    margin: 5px;
+    font-family: 'Prompt', sans-serif;
 }
 
-button:hover {
-    background: #ff004c;
-    transform: scale(1.1);
-}
+button:hover { transform: scale(1.1); background: #ff004c; }
 
 .letter {
     position: fixed;
     bottom: -100%;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;
-    max-width: 500px;
-    background: #FFC0CB;
-    padding: 35px;
+    width: 85%;
+    max-width: 450px;
+    background: #FFC0CB; 
+    padding: 30px;
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    transition: 1s;
+    transition: 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     text-align: left;
     color: #444;
+    z-index: 100;
 }
 
-.letter h2 {
-    text-align: center;
-    color: #ff2e63;
-}
+.show-letter { bottom: 50%; transform: translate(-50%, 50%); }
 
-.show-letter {
-    bottom: 50%;
-    transform: translate(-50%, 50%);
+.btn-group { text-align: center; margin-top: 20px; }
+.btn-yes { background: #28a745; }
+.btn-no { background: #6c757d; }
+
+/* ช่องพิมพ์เหตุผล */
+#reasonInputText {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ff2e63;
+    margin-top: 10px;
+    font-family: 'Prompt', sans-serif;
+    box-sizing: border-box;
 }
 
 .flower {
     position: absolute;
+    bottom: -10vh;
     font-size: 30px;
     animation: float 10s linear infinite;
 }
 
 @keyframes float {
-    0% { transform: translateY(100vh); opacity: 0; }
+    0% { transform: translateY(0); opacity: 0; }
     10% { opacity: 1; }
-    100% { transform: translateY(-10vh); opacity: 0; }
+    100% { transform: translateY(-110vh); opacity: 0; }
 }
 
 @keyframes fadeIn {
@@ -113,37 +110,107 @@ button:hover {
 <div class="flower" style="left:70%; animation-delay:1s;">🌺</div>
 <div class="flower" style="left:90%; animation-delay:3s;">💮</div>
 
-<div class="card">
+<div class="card" id="mainCard">
     <h1>Happy Valentine's Day 💕</h1>
-    <p>
-        ถึงคนพิเศษของแม็ก 💖<br>
-        ขอบคุณที่เข้ามาในชีวิตผมนะคับ<br>
-        แม็กรักพี่หลินมากนะ 💌
-    </p>
-    <br>
-    <button onclick="showLetter()">กดตรงนี้สิ 💝</button>
+    <p>ถึงคนพิเศษของแม็ก 💖<br>ขอบคุณที่เข้ามาในชีวิตผมนะคับ<br>แม็กรักพี่หลินมากนะ 💌</p>
+    <button onclick="showLetter(1)">กดตรงนี้สิ 💝</button>
 </div>
 
-<div class="letter" id="loveLetter">
-    <h2>💌 สารภาพรัก 💌</h2>
+<div class="letter" id="letter1">
+    <h2 style="text-align:center; color:#ff2e63;">💌 ฉบับที่ 1 💌</h2>
     <p>
         ถึงพี่หลินของแม็ก 💕<br><br>
         ผมอยากบอกว่าผมชอบพี่หลินมาก ๆ เลยนะคับ<br>
-        ตั้งแต่วันที่พี่เข้ามาในชีวิต ทุกวันของผมมันสดใสขึ้นมาก ๆ ☀️<br><br>
-        ผมมีความสุขทุกครั้งที่ได้คุย ได้เจอ ได้อยู่ใกล้ ๆ พี่ 💖<br>
-        ขอให้ปีนี้และทุก ๆ ปีต่อจากนี้<br>
-        พี่หลินอยู่กับผมไปนาน ๆ นะคับ 🌷<br><br>
-        รักพี่หลินที่สุดเลย 💞
+        ตั้งแต่วันที่พี่เข้ามาในชีวิต ทุกวันของผมมันสดใสขึ้นมาก ๆ ☀️<br>
+        ผมมีความสุขทุกครั้งที่ได้คุย ได้เจอ ได้อยู่ใกล้ ๆ พี่ 💖
     </p>
+    <div style="text-align:center;">
+        <button onclick="showLetter(2)">อ่านต่อหน้าถัดไป ➡️</button>
+    </div>
 </div>
 
+<div class="letter" id="letter2">
+    <div id="askSection">
+        <h2 style="text-align:center; color:#ff2e63;">💝 ความในใจ 💝</h2>
+        <p style="text-align:center;">
+            นี่ก็วันวาเลนไทน์แล้วนะคับ...<br>
+            <strong>จะยอมใจอ่อนให้ผมได้ยัง?</strong><br><br>
+            พี่หลินจะยอมเป็นแฟนผมได้หรือยังคับ? 🥺
+        </p>
+        <div class="btn-group">
+            <button class="btn-yes" onclick="handleChoice('ยอม')">ยอมคับ 🥰</button>
+            <button class="btn-no" onclick="handleChoice('ไม่ยอม')">ไม่ยอม 😋</button>
+        </div>
+    </div>
+
+    <div id="reasonSection" style="display:none; text-align:center;">
+        <h2 style="color:#ff2e63;">งื้อออ 🥺</h2>
+        <p>ทำไมใจร้ายกับเด็กน้อยจังคับ...<br>บอกเหตุผลหน่อยได้มั้ยคับ? (ไม่บอกก็ได้นะ)</p>
+        <textarea id="reasonInputText" placeholder="พิมพ์เหตุผลตรงนี้..." rows="3"></textarea>
+        <div class="btn-group">
+            <button onclick="sendFinal('ไม่ยอม')">ส่งคำตอบให้แม็กคับ 💌</button>
+        </div>
+    </div>
+
+    <div id="resultSection" style="display:none; text-align:center;">
+        <h2 id="resultTitle" style="color:#ff2e63;"></h2>
+        <p id="resultText" style="font-size: 22px; font-weight: bold;"></p>
+        <p style="font-size: 14px; color: #666;">(แม็กได้รับคำตอบในอีเมลแล้วนะคับ ✨)</p>
+    </div>
+</div>
+
+<form id="loveForm" action="https://formspree.io/f/nopparatkanpian@gmail.com" method="POST" style="display:none;">
+    <input type="text" name="answer" id="answerInput">
+    <input type="text" name="reason" id="reasonInput">
+</form>
+
 <script>
-function showLetter() {
-    document.getElementById("loveLetter").classList.add("show-letter");
+function showLetter(num) {
+    document.getElementById("letter1").classList.remove("show-letter");
+    document.getElementById("letter2").classList.remove("show-letter");
+    if(num === 1) document.getElementById("letter1").classList.add("show-letter");
+    if(num === 2) document.getElementById("letter2").classList.add("show-letter");
+}
+
+function handleChoice(val) {
+    if(val === 'ยอม') {
+        sendFinal('ยอม');
+    } else {
+        // ถ้าไม่ยอม ให้ไปหน้าถามเหตุผลก่อน
+        document.getElementById("askSection").style.display = "none";
+        document.getElementById("reasonSection").style.display = "block";
+    }
+}
+
+function sendFinal(val) {
+    let reason = document.getElementById("reasonInputText").value;
+    
+    // แสดงหน้าผลลัพธ์
+    document.getElementById("askSection").style.display = "none";
+    document.getElementById("reasonSection").style.display = "none";
+    document.getElementById("resultSection").style.display = "block";
+
+    if(val === 'ยอม') {
+        document.getElementById("resultTitle").innerText = "เย้! ❤️";
+        document.getElementById("resultText").innerText = "ขอบคุณนะคับ ❤️";
+        document.getElementById("answerInput").value = "พี่หลินตอบว่า: ยอม";
+    } else {
+        document.getElementById("resultTitle").innerText = "งื้อออ 🥺";
+        document.getElementById("resultText").innerText = "ทำไมใจร้ายกับเด็กน้อยจังคับ 🥺";
+        document.getElementById("answerInput").value = "พี่หลินตอบว่า: ไม่ยอม";
+        document.getElementById("reasonInput").value = "เหตุผลคือ: " + (reason || "ไม่ระบุ");
+    }
+
+    // ส่งฟอร์ม
+    const form = document.getElementById("loveForm");
+    const data = new FormData(form);
+    fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+    });
 }
 </script>
 
 </body>
 </html>
-
-
