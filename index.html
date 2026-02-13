@@ -104,7 +104,9 @@ button:hover { transform: scale(1.1); background: #ff004c; }
 <body>
 
 <div class="flower" style="left:10%">🌸</div>
+<div class="flower" style="left:30%; animation-delay:2s;">🌷</div>
 <div class="flower" style="left:50%; animation-delay:4s;">🌹</div>
+<div class="flower" style="left:70%; animation-delay:1s;">🌺</div>
 <div class="flower" style="left:90%; animation-delay:3s;">💮</div>
 
 <div class="card" id="mainCard">
@@ -115,7 +117,12 @@ button:hover { transform: scale(1.1); background: #ff004c; }
 
 <div class="letter" id="letter1">
     <h2 style="text-align:center; color:#ff2e63;">💌 ฉบับที่ 1 💌</h2>
-    <p>ผมมีความสุขทุกครั้งที่ได้คุย ได้เจอ ได้อยู่ใกล้ ๆ พี่ 💖</p>
+    <p>
+        ถึงพี่หลินของแม็ก 💕<br><br>
+        ผมอยากบอกว่าผมชอบพี่หลินมาก ๆ เลยนะคับ<br>
+        ตั้งแต่วันที่พี่เข้ามาในชีวิต ทุกวันของผมมันสดใสขึ้นมาก ๆ ☀️<br>
+        ผมมีความสุขทุกครั้งที่ได้คุย ได้เจอ ได้อยู่ใกล้ ๆ พี่ 💖
+    </p>
     <div style="text-align:center;">
         <button onclick="showLetter(2)">อ่านต่อหน้าถัดไป ➡️</button>
     </div>
@@ -125,6 +132,8 @@ button:hover { transform: scale(1.1); background: #ff004c; }
     <div id="askSection">
         <h2 style="text-align:center; color:#ff2e63;">💝 ความในใจ 💝</h2>
         <p style="text-align:center;">
+            นี่ก็วันวาเลนไทน์แล้วนะคับ...<br>
+            <strong>จะยอมใจอ่อนให้ผมได้ยัง?</strong><br><br>
             พี่หลินจะยอมเป็นแฟนผมได้หรือยังคับ? 🥺
         </p>
         <div class="btn-group">
@@ -135,7 +144,7 @@ button:hover { transform: scale(1.1); background: #ff004c; }
 
     <div id="reasonSection" style="display:none; text-align:center;">
         <h2 style="color:#ff2e63;">งื้อออ 🥺</h2>
-        <p>ทำไมใจร้ายจังคับ บอกเหตุผลหน่อยได้มั้ย...</p>
+        <p>ทำไมใจร้ายกับเด็กน้อยจังคับ...<br>บอกเหตุผลหน่อยได้มั้ยคับ? (ไม่บอกก็ได้นะ)</p>
         <textarea id="reasonInputText" placeholder="พิมพ์เหตุผลตรงนี้..." rows="3"></textarea>
         <div class="btn-group">
             <button onclick="sendFinal('ไม่ยอม')">ส่งคำตอบให้แม็กคับ 💌</button>
@@ -168,33 +177,37 @@ function handleChoice(val) {
 
 function sendFinal(val) {
     let reasonText = document.getElementById("reasonInputText").value;
-    // ใช้ลิงก์ Web App URL ที่แม็กเจนมาให้ครับ
+    // ลิงก์ Web App URL ของแม็ก
     let scriptURL = "https://script.google.com/macros/s/AKfycbyN2b_1sBut-PxOGmPRGHRvsfQT6L_krHr4Y699HXkBV_SkgoPZmbnUgF6yF3lKma2q/exec";
 
+    // แสดงหน้าผลลัพธ์ทันที
     document.getElementById("askSection").style.display = "none";
     document.getElementById("reasonSection").style.display = "none";
     document.getElementById("resultSection").style.display = "block";
 
+    let statusText = "";
     if(val === 'ยอม') {
         document.getElementById("resultTitle").innerText = "เย้! ❤️";
         document.getElementById("resultText").innerText = "ขอบคุณนะคับ ❤️";
+        statusText = "ยอมเป็นแฟนแล้ว";
     } else {
         document.getElementById("resultTitle").innerText = "งื้อออ 🥺";
         document.getElementById("resultText").innerText = "ทำไมใจร้ายกับเด็กน้อยจังคับ 🥺";
+        statusText = "ไม่ยอม";
     }
 
-    // ส่งข้อมูลเข้า Google Sheets แบบเงียบๆ
+    // ส่งข้อมูลเข้า Google Sheets แบบเบื้องหลัง (Hidden)
     let formData = new URLSearchParams();
-    formData.append("answer", val === 'ยอม' ? "ยอมเป็นแฟนแล้ว" : "ไม่ยอมคับ");
+    formData.append("answer", statusText);
     formData.append("reason", reasonText || "ไม่ได้ระบุ");
 
     fetch(scriptURL, { 
         method: 'POST', 
-        mode: 'no-cors', // เพิ่มโหมดนี้เพื่อให้ส่งข้อมูลข้ามโดเมนได้สะดวกขึ้นครับ
+        mode: 'no-cors',
         body: formData 
     })
-    .then(() => console.log('Data sent!'))
-    .catch(error => console.error('Error!', error.message));
+    .then(() => console.log('ส่งข้อมูลสำเร็จแล้ว!'))
+    .catch(error => console.error('Error:', error));
 }
 </script>
 
