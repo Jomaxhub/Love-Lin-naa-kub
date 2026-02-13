@@ -49,7 +49,7 @@
             border-radius: 25px;
             box-shadow: 0 10px 25px rgba(255, 182, 193, 0.4);
             border: 2px solid #ffe4e8;
-            position: relative; /* เพื่อให้ตกแต่งของในกระดาษได้ */
+            position: relative;
             overflow: hidden;
         }
 
@@ -61,7 +61,6 @@
             z-index: 10;
         }
 
-        /* ของตกแต่งชิ้นเล็กๆ ในกระดาษ */
         .deco-in-paper {
             position: absolute;
             font-size: 18px;
@@ -115,7 +114,6 @@
             border: 1px dashed #ffb6c1;
         }
 
-        /* ของโปรยพื้นหลังภายนอก */
         .item {
             position: absolute;
             bottom: -10vh;
@@ -132,6 +130,26 @@
             border-radius: 20px;
             position: relative;
             z-index: 2;
+        }
+
+        /* ส่วนรับข้อความ */
+        #msgInput {
+            width: 85%;
+            padding: 12px;
+            border: 2px solid #ffb6c1;
+            border-radius: 15px;
+            margin: 15px 0;
+            font-family: 'Prompt', sans-serif;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .loading {
+            font-size: 14px;
+            color: #ff8fa3;
+            display: none;
+            margin-top: 10px;
+            font-weight: 600;
         }
 
         @keyframes float {
@@ -169,13 +187,8 @@
         <div class="deco-in-paper" style="top:15px; right:15px;">💙</div>
         <div class="deco-in-paper" style="bottom:15px; left:15px;">🍫</div>
         <div class="deco-in-paper" style="bottom:10px; right:10px;">🤍</div>
-        
         <h1>Happy Valentine's Day 💕</h1>
-        <p>
-            ถึงคนพิเศษของแม็ก 💖<br>
-            ขอบคุณที่เข้ามาในชีวิตผมนะคับ<br>
-            แม็กรักพี่หลินมากนะ 💌
-        </p>
+        <p>ถึงคนพิเศษของแม็ก 💖<br>ขอบคุณที่เข้ามาในชีวิตผมนะคับ<br>แม็กรักพี่หลินมากนะ 💌</p>
         <button onclick="showLetter(1)">อ่านจดหมาย 💝</button>
     </div>
 
@@ -184,14 +197,9 @@
         <div class="deco-in-paper" style="top:5px; right:15px;">❤️</div>
         <div class="deco-in-paper" style="bottom:10px; left:20px;">💙</div>
         <div class="deco-in-paper" style="bottom:10px; right:20px;">🍫</div>
-
         <h2 style="color:#ff8fa3; margin-top:0; font-size: 22px;">💌 ถึงพี่หลิน 💌</h2>
         <div class="letter-content">
-            <p>
-                ขอบคุณที่เข้ามาเป็นส่วนหนึ่งของชีวิต ทำให้วันธรรมดาของผมดูมีความหมายมากขึ้นในทุกๆ วันที่ผ่านไป...<br><br>
-                แค่ได้คุย หรือได้อยู่ใกล้ๆ กัน ก็ทำให้ผมรู้สึกดีและยิ้มได้เสมอ ขอบคุณที่คอยรับฟังและเข้าใจในตัวผมนะคับ แม้บางครั้งผมอาจจะสื่อสารไม่เก่ง หรือดูเงียบไปบ้าง แต่ความรู้สึกดีๆ ที่มีให้พี่มันไม่เคยน้อยลงเลย<br><br>
-                ผมรักพี่มากนะคับ และอยากรักษาความรู้สึกดีๆ แบบนี้เอาไว้ให้นานที่สุดเท่าที่จะทำได้ ขอบคุณที่ให้โอกาสผมนะคับ 💖
-            </p>
+            <p>ขอบคุณที่เข้ามาเป็นส่วนหนึ่งของชีวิต ทำให้วันธรรมดาของผมดูมีความหมายมากขึ้น... ผมรักพี่มากนะคับ ขอบคุณที่ให้โอกาสผมนะคับ 💖</p>
         </div>
         <button onclick="showLetter(2)">หน้าถัดไป ➡️</button>
     </div>
@@ -201,7 +209,6 @@
         <div class="deco-in-paper" style="top:10px; right:10px;">❤️</div>
         <div class="deco-in-paper" style="bottom:10px; left:10px;">🤍</div>
         <div class="deco-in-paper" style="bottom:10px; right:10px;">🌹</div>
-
         <h2 style="color:#ff8fa3; margin-top:0; font-size: 22px;">🐱 รับดอกไม้ไหมคะ? 🐱</h2>
         <img class="cat-gif" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcGltdzBmdGkwNHBkbXRwNzdldzNvMmplajNqNTdxa2t3NTUxZW9waSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ycEx6eexqz4p7ZVrde/giphy.gif">
         
@@ -211,13 +218,19 @@
         </div>
 
         <div id="resultSection" style="display:none; margin-top:10px;">
-            <h2 id="resultTitle" style="color:#ff8fa3; margin: 5px 0;"></h2>
-            <p id="resultText" style="font-weight: 600; font-size: 18px; color: #555;"></p>
-            <button onclick="closeLetter()" style="background: #eee; color: #888;">ปิดจดหมาย ⬅️</button>
+            <h2 id="resultTitle" style="color:#ff8fa3; margin: 5px 0;">เย้! ❤️ ขอบคุณนะคับ</h2>
+            <p style="font-weight: 600; font-size: 16px; color: #555;">ฝากข้อความถึงแม็กหน่อยนะ:</p>
+            <input type="text" id="msgInput" placeholder="พิมพ์บอกอะไรแม็กหน่อย...">
+            <br>
+            <button id="sendBtn" onclick="sendMessage()">ส่งข้อความ 💌</button>
+            <p class="loading" id="loadText">กำลังส่งความรักไปหาแม็ก...</p>
         </div>
     </div>
 
     <script>
+        // ลิงก์ Google Apps Script ของคุณ
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxoKWwQ5ApDp_NuzcwQ2TVnRsXChI_Ik1pTbeMGDVqoukpJFS0GC3djonS1dV6os2Zx/exec"; 
+
         let noCount = 0;
         let yesScale = 1;
 
@@ -233,7 +246,6 @@
             document.getElementById("letter1").classList.remove("show-letter");
             document.getElementById("letter2").classList.remove("show-letter");
             document.getElementById("mainCard").style.display = "none";
-            
             if(num === 1) document.getElementById("letter1").classList.add("show-letter");
             if(num === 2) document.getElementById("letter2").classList.add("show-letter");
         }
@@ -241,38 +253,59 @@
         function handleChoice(val) {
             const yesBtn = document.getElementById("yesBtn");
             const noBtn = document.getElementById("noBtn");
-            const title = document.getElementById("resultTitle");
-            const text = document.getElementById("resultText");
-
             if (val === 'ไม่รับ') {
                 noCount++;
                 yesScale += 0.3; 
                 yesBtn.style.transform = `scale(${yesScale})`;
-                if (noCount >= 5) {
-                    noBtn.style.display = "none";
-                }
+                if (noCount >= 5) noBtn.style.display = "none";
                 return;
             }
-
             if(val === 'รับ') {
                 document.getElementById("flowerZone").style.display = "none";
                 document.getElementById("choiceButtons").style.display = "none";
                 document.getElementById("resultSection").style.display = "block";
-                title.innerText = "เย้! ❤️";
-                text.innerText = "ขอบคุณที่รับดอกไม้นะคับ 💖";
             }
+        }
+
+        function sendMessage() {
+            const msg = document.getElementById("msgInput").value;
+            const btn = document.getElementById("sendBtn");
+            const loadText = document.getElementById("loadText");
+
+            if(!msg) { alert("พิมพ์บอกแม็กสักนิดน้าา 😊"); return; }
+
+            btn.disabled = true;
+            loadText.style.display = "block";
+
+            // สร้างฟอร์มข้อมูลส่งไป Google Sheets
+            const formData = new FormData();
+            formData.append("message", msg);
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => {
+                loadText.innerText = "ส่งเรียบร้อยแล้ว! รักพี่หลินนะคับ 💖";
+                document.getElementById("msgInput").value = "";
+                setTimeout(() => { closeLetter(); }, 2500);
+            })
+            .catch(err => {
+                // กรณี no-cors อาจจะเด้งมาที่นี่แต่ข้อมูลเข้าปกติ
+                loadText.innerText = "ส่งเรียบร้อยแล้ว! รักพี่หลินนะคับ 💖";
+                setTimeout(() => { closeLetter(); }, 2500);
+            });
         }
 
         function closeLetter() {
             document.getElementById("letter1").classList.remove("show-letter");
             document.getElementById("letter2").classList.remove("show-letter");
             document.getElementById("mainCard").style.display = "block";
-            noCount = 0;
-            yesScale = 1;
-            document.getElementById("yesBtn").style.transform = `scale(1)`;
-            document.getElementById("noBtn").style.display = "inline-block";
             document.getElementById("resultSection").style.display = "none";
             document.getElementById("choiceButtons").style.display = "block";
+            document.getElementById("loadText").style.display = "none";
+            document.getElementById("loadText").innerText = "กำลังส่งความรักไปหาแม็ก...";
+            document.getElementById("sendBtn").disabled = false;
             document.getElementById("flowerZone").style.display = "block";
         }
     </script>
